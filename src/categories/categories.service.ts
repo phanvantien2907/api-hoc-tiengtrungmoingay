@@ -42,7 +42,7 @@ export class CategoriesService {
   async remove(id: string) {
     await this.findCategoryById(id);
     const remove_categories = await this.categoryModel.findByIdAndUpdate(id, { is_deleted: true }).exec();
-    return { msg: `Xóa danh mục ${remove_categories?.name} thành công`, status: HttpStatus.OK };
+    return { msg: `Xóa danh mục ${remove_categories?.name} thành công`, status: HttpStatus.NO_CONTENT };
   }
 
   async findCategoryById(id: string) {

@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { Types } from 'mongoose';
+import { CreateFormDto } from "src/vocabularies/dto/create-form.dto";
 
 @Schema({ versionKey: false, timestamps: true })
 export class Vocabularies extends Document {
@@ -17,6 +18,9 @@ export class Vocabularies extends Document {
 
     @Prop({ type: [String] })
      pos: string[];
+
+     @Prop({ type: [CreateFormDto] })
+     forms: CreateFormDto[];
 
    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Categories' })
     categories: Types.ObjectId;

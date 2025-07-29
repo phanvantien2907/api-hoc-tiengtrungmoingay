@@ -10,8 +10,13 @@ import { Categories } from 'src/categories/schema/category.schema';
 export class VocabulariesService {
   constructor(@InjectModel(Vocabularies.name) private vocabularyModel: Model<Vocabularies>,
   @InjectModel(Categories.name) private categoryModel: Model<Categories>) {}
-  create(createVocabularyDto: CreateVocabularyDto) {
-    return 'This action adds a new vocabulary';
+  async create(createVocabularyDto: CreateVocabularyDto) {
+    const find_vocabularies = await this.vocabularyModel.findOne({ simplified: createVocabularyDto.simplified });
+    if(!find_vocabularies) { throw new NotFoundException('Từ vựng đã tồn tại');  }
+     const find_categories = await this.categoryModel.findOne({ name: createVocabularyDto.categories });
+    if(!find_categories) { throw new NotFoundException('Danh mục không tồn tại'); }
+    const new_vocabularies = await this.vocabularyModel.create({...createVocabularyDto, categories: find_categories?._id});
+    return { msg: `Thêm mới từ vựng ${new_vocabularies.simplified} thành công`, status: HttpStatus.CREATED, data: new_vocabularies };
   }
 
  async findAll(page: number, limit: number) {
@@ -28,13 +33,25 @@ export class VocabulariesService {
   }
 
  async update(id: string, updateVocabularyDto: UpdateVocabularyDto) {
-    return `This action updates a #${id} vocabulary`;
+   await this.findVocabularyById(id);
+    const find_vocabularies = await this.vocabularyModel.findOne({_id: id, is_deleted: false, is_active: true}).select('-__v -is_deleted -is_active').populate('categories', 'name').exec();
+    if(!find_vocabularies) { throw new NotFoundException('Không tìm thấy từ vựng'); }
+    if(updateVocabularyDto.categories) {
+      const find_categories = await this.categoryModel.findOne({ name: updateVocabularyDto.categories });
+      if(!find_categories) { throw new NotFoundException('Danh mục không tồn tại'); }
+      updateVocabularyDto.categories = find_categories._id.toString();
+    }
+    const update_vocabulary: any = { ...updateVocabularyDto, updatedAt: new Date(), };
+    const result = await this.vocabularyModel.updateOne({_id: id}, { $set: update_vocabulary });
+    if(!result) { throw new NotFoundException('Cập nhật từ vựng không thành công'); }
+    return { msg: `Cập nhật từ vựng ${find_vocabularies?.simplified} thành công`, status: HttpStatus.OK, data: update_vocabulary };
   }
 
  async remove(id: string) {
   await this.findVocabularyById(id);
-   await this.vocabularyModel.updateOne({_id: id}, {isDeleted: true, updatedAt: new Date()}).exec();
-  return {status: HttpStatus.OK, msg: `Xóa từ vựng thành công`};
+    const remove_vocabularies = await this.vocabularyModel.findByIdAndUpdate(id, { is_deleted: true, updatedAt: new Date() }).exec();
+    if(!remove_vocabularies) { throw new NotFoundException('Xóa từ vựng không thành công'); }
+    return { msg: `Xóa từ vựng ${remove_vocabularies.simplified} thành công`, status: HttpStatus.NO_CONTENT };
   }
 
   async findVocabularyById(id: string) {

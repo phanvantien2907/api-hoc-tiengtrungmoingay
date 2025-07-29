@@ -4,13 +4,14 @@ import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { GuardsGuard } from 'src/guards/guards.guard';
-import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
 @Controller('vocabularies')
 export class VocabulariesController {
   constructor(private readonly vocabulariesService: VocabulariesService) {}
 
   @Post()
+  @ApiBearerAuth('access-token')
+  @UseGuards(GuardsGuard)
   create(@Body() createVocabularyDto: CreateVocabularyDto) {
     return this.vocabulariesService.create(createVocabularyDto);
   }

@@ -56,7 +56,7 @@ let CategoriesService = class CategoriesService {
     async remove(id) {
         await this.findCategoryById(id);
         const remove_categories = await this.categoryModel.findByIdAndUpdate(id, { is_deleted: true }).exec();
-        return { msg: `Xóa danh mục ${remove_categories?.name} thành công`, status: common_1.HttpStatus.OK };
+        return { msg: `Xóa danh mục ${remove_categories?.name} thành công`, status: common_1.HttpStatus.NO_CONTENT };
     }
     async findCategoryById(id) {
         const find_categoris_by_id = await this.categoryModel.findById(id);

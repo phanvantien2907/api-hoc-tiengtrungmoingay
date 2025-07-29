@@ -1,12 +1,14 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { Types } from 'mongoose';
+import { CreateFormDto } from "src/vocabularies/dto/create-form.dto";
 export declare class Vocabularies extends Document {
     _id: mongoose.Types.ObjectId;
     simplified: string;
     radical: string;
     frequency: number;
     pos: string[];
+    forms: CreateFormDto[];
     categories: Types.ObjectId;
     is_deleted: boolean;
     is_active: boolean;

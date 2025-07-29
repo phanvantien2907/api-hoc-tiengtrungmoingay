@@ -10,11 +10,20 @@ exports.QuizModule = void 0;
 const common_1 = require("@nestjs/common");
 const quiz_service_1 = require("./quiz.service");
 const quiz_controller_1 = require("./quiz.controller");
+const mongoose_1 = require("@nestjs/mongoose");
+const quiz_schema_1 = require("./schema/quiz.schema");
+const category_schema_1 = require("../categories/schema/category.schema");
 let QuizModule = class QuizModule {
 };
 exports.QuizModule = QuizModule;
 exports.QuizModule = QuizModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            mongoose_1.MongooseModule.forFeature([
+                { name: quiz_schema_1.Quiz.name, schema: quiz_schema_1.QuizSchema, collection: 'quiz' },
+                { name: category_schema_1.Categories.name, schema: category_schema_1.CategoriesSchema, collection: 'categories' }
+            ]),
+        ],
         controllers: [quiz_controller_1.QuizController],
         providers: [quiz_service_1.QuizService],
     })

@@ -14,11 +14,13 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose = require("mongoose");
 const mongoose_2 = require("mongoose");
 const mongoose_3 = require("mongoose");
+const create_form_dto_1 = require("../dto/create-form.dto");
 let Vocabularies = class Vocabularies extends mongoose_2.Document {
     simplified;
     radical;
     frequency;
     pos;
+    forms;
     categories;
     is_deleted;
     is_active;
@@ -40,6 +42,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: [String] }),
     __metadata("design:type", Array)
 ], Vocabularies.prototype, "pos", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [create_form_dto_1.CreateFormDto] }),
+    __metadata("design:type", Array)
+], Vocabularies.prototype, "forms", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose.Schema.Types.ObjectId, ref: 'Categories' }),
     __metadata("design:type", mongoose_3.Types.ObjectId)

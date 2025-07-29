@@ -8,7 +8,15 @@ export declare class VocabulariesService {
     private vocabularyModel;
     private categoryModel;
     constructor(vocabularyModel: Model<Vocabularies>, categoryModel: Model<Categories>);
-    create(createVocabularyDto: CreateVocabularyDto): string;
+    create(createVocabularyDto: CreateVocabularyDto): Promise<{
+        msg: string;
+        status: HttpStatus;
+        data: import("mongoose").Document<unknown, {}, Vocabularies, {}> & Vocabularies & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }> & {
+            __v: number;
+        };
+    }>;
     findAll(page: number, limit: number): Promise<{
         status: HttpStatus;
         msg: string;
@@ -27,10 +35,14 @@ export declare class VocabulariesService {
             __v: number;
         };
     }>;
-    update(id: string, updateVocabularyDto: UpdateVocabularyDto): Promise<string>;
-    remove(id: string): Promise<{
-        status: HttpStatus;
+    update(id: string, updateVocabularyDto: UpdateVocabularyDto): Promise<{
         msg: string;
+        status: HttpStatus;
+        data: any;
+    }>;
+    remove(id: string): Promise<{
+        msg: string;
+        status: HttpStatus;
     }>;
     findVocabularyById(id: string): Promise<void>;
 }

@@ -4,9 +4,40 @@ import { UpdateQuizDto } from './dto/update-quiz.dto';
 export declare class QuizController {
     private readonly quizService;
     constructor(quizService: QuizService);
-    create(createQuizDto: CreateQuizDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateQuizDto: UpdateQuizDto): string;
-    remove(id: string): string;
+    create(createQuizDto: CreateQuizDto): Promise<{
+        msg: string;
+        status: import("@nestjs/common").HttpStatus;
+        data: import("mongoose").Document<unknown, {}, import("./schema/quiz.schema").Quiz, {}> & import("./schema/quiz.schema").Quiz & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }> & {
+            __v: number;
+        };
+    }>;
+    findAll(): Promise<{
+        msg: string;
+        status: import("@nestjs/common").HttpStatus;
+        data: (import("mongoose").Document<unknown, {}, import("./schema/quiz.schema").Quiz, {}> & import("./schema/quiz.schema").Quiz & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }> & {
+            __v: number;
+        })[];
+    }>;
+    findOne(id: string): Promise<{
+        msg: string;
+        status: import("@nestjs/common").HttpStatus;
+        data: import("mongoose").Document<unknown, {}, import("./schema/quiz.schema").Quiz, {}> & import("./schema/quiz.schema").Quiz & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }> & {
+            __v: number;
+        };
+    }>;
+    update(id: string, updateQuizDto: UpdateQuizDto): Promise<{
+        msg: string;
+        status: import("@nestjs/common").HttpStatus;
+        data: any;
+    }>;
+    remove(id: string): Promise<{
+        msg: string;
+        status: import("@nestjs/common").HttpStatus;
+    }>;
 }
