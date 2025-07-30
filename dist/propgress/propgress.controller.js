@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const propgress_service_1 = require("./propgress.service");
 const create_propgress_dto_1 = require("./dto/create-propgress.dto");
 const update_propgress_dto_1 = require("./dto/update-propgress.dto");
+const swagger_1 = require("@nestjs/swagger");
+const guards_guard_1 = require("../guards/guards.guard");
 let PropgressController = class PropgressController {
     propgressService;
     constructor(propgressService) {
@@ -41,6 +43,8 @@ let PropgressController = class PropgressController {
 exports.PropgressController = PropgressController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.UseGuards)(guards_guard_1.GuardsGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_propgress_dto_1.CreatePropgressDto]),
@@ -48,12 +52,16 @@ __decorate([
 ], PropgressController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.UseGuards)(guards_guard_1.GuardsGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PropgressController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.UseGuards)(guards_guard_1.GuardsGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -61,6 +69,8 @@ __decorate([
 ], PropgressController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.UseGuards)(guards_guard_1.GuardsGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -69,6 +79,8 @@ __decorate([
 ], PropgressController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, common_1.UseGuards)(guards_guard_1.GuardsGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -12,7 +12,7 @@ export class CategoriesController {
   @Post()
   @ApiOperation({ summary: 'Tạo danh mục mới' })
   @ApiBearerAuth('access-token')
-   @UseGuards(GuardsGuard)
+  @UseGuards(GuardsGuard)
   create(@Body() createCategoryDto: CreateCategoryDto) {
   return this.categoriesService.create(createCategoryDto);
   }
