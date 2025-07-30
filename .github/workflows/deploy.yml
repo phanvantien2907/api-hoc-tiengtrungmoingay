@@ -24,4 +24,4 @@ jobs:
           git pull origin main             # kéo code mới nhất từ GitHub
           npm install
           npm run build
-          pm2 restart api-hoc-tiengtrungmoingay
+          pm2 restart api-hoctiengtrungmoingay
